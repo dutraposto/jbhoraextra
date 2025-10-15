@@ -65,7 +65,7 @@ export const OvertimeForm = ({ onSuccess }: OvertimeFormProps) => {
     }
 
     const totalHours = totalMinutes / 60;
-    const totalValue = totalHours * 15.75;
+    const totalValue = totalHours * 15.57;
 
     return {
       totalHours: Math.max(0, totalHours),

@@ -56,7 +56,7 @@ const Index = () => {
             </div>
             <h3 className="font-semibold text-lg mb-2">Cálculo Automático</h3>
             <p className="text-sm text-muted-foreground">
-              R$ 15,75 por hora com desconto automático de almoço
+              R$ 15,57 por hora com desconto automático de almoço
             </p>
           </div>
 
