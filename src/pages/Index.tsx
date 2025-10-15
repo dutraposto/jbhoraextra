@@ -1,53 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Clock, ArrowRight, Loader2 } from "lucide-react";
-import { AdminSetup } from "@/components/AdminSetup";
+import { Clock, ArrowRight } from "lucide-react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Index = () => {
   const navigate = useNavigate();
-  const [showSetup, setShowSetup] = useState(false);
-  const [checking, setChecking] = useState(true);
-
-  useEffect(() => {
-    checkAdminExists();
-  }, []);
-
-  const checkAdminExists = async () => {
-    try {
-      const { data } = await supabase
-        .from("user_roles")
-        .select("id")
-        .eq("role", "admin")
-        .limit(1);
-
-      setShowSetup(!data || data.length === 0);
-    } catch (error) {
-      console.error("Error checking admin:", error);
-    } finally {
-      setChecking(false);
-    }
-  };
-
-  if (checking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (showSetup) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background p-4">
-        <AdminSetup />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary to-background p-4">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
+      
       <div className="text-center max-w-2xl mx-auto space-y-8">
         <div className="flex justify-center mb-6">
           <div className="h-24 w-24 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-elevated">

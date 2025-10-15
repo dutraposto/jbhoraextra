@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "sonner";
 import { LogOut, Clock, DollarSign, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Table,
   TableBody,
@@ -33,6 +34,7 @@ export const UserView = ({ user }: UserViewProps) => {
   const navigate = useNavigate();
   const [records, setRecords] = useState<OvertimeRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [userName, setUserName] = useState<string>("");
 
   useEffect(() => {
     const fetchRecords = async () => {
@@ -53,7 +55,26 @@ export const UserView = ({ user }: UserViewProps) => {
       }
     };
 
+    const fetchUserProfile = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("full_name")
+          .eq("id", user.id)
+          .single();
+
+        if (error) throw error;
+        if (data?.full_name) {
+          const firstName = data.full_name.split(" ")[0];
+          setUserName(firstName);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+
     fetchRecords();
+    fetchUserProfile();
   }, [user.id]);
 
   const handleLogout = async () => {
@@ -74,14 +95,19 @@ export const UserView = ({ user }: UserViewProps) => {
               <Clock className="h-5 w-5 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-foreground">Minhas Horas Extras</h1>
+              <h1 className="text-xl font-bold text-foreground">
+                {userName ? `Olá, ${userName}` : "Minhas Horas Extras"}
+              </h1>
               <p className="text-sm text-muted-foreground">Visualize seus registros</p>
             </div>
           </div>
-          <Button onClick={handleLogout} variant="outline" size="sm">
-            <LogOut className="mr-2 h-4 w-4" />
-            Sair
-          </Button>
+          <div className="flex gap-2 items-center">
+            <ThemeToggle />
+            <Button onClick={handleLogout} variant="outline" size="sm">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 

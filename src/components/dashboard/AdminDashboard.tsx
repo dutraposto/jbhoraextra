@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { toast } from "sonner";
 import { LogOut, Clock, DollarSign, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { OvertimeForm } from "./OvertimeForm";
 import { OvertimeTable } from "./OvertimeTable";
 import { UserManagement } from "./UserManagement";
@@ -81,10 +82,13 @@ export const AdminDashboard = ({ user }: AdminDashboardProps) => {
               <p className="text-sm text-muted-foreground">Gestão de Horas Extras</p>
             </div>
           </div>
-          <Button onClick={handleLogout} variant="outline" size="sm">
-            <LogOut className="mr-2 h-4 w-4" />
-            Sair
-          </Button>
+          <div className="flex gap-2 items-center">
+            <ThemeToggle />
+            <Button onClick={handleLogout} variant="outline" size="sm">
+              <LogOut className="mr-2 h-4 w-4" />
+              Sair
+            </Button>
+          </div>
         </div>
       </header>
 
