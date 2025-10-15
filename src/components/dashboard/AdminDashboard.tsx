@@ -10,6 +10,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { OvertimeForm } from "./OvertimeForm";
 import { OvertimeTable } from "./OvertimeTable";
 import { UserManagement } from "./UserManagement";
+import { UserList } from "./UserList";
 
 interface AdminDashboardProps {
   user: User;
@@ -139,6 +140,8 @@ export const AdminDashboard = ({ user }: AdminDashboardProps) => {
           <OvertimeForm onSuccess={fetchRecords} />
           <UserManagement />
         </div>
+
+        <UserList />
 
         <OvertimeTable records={records} loading={loading} onUpdate={fetchRecords} />
       </main>
